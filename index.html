@@ -294,7 +294,7 @@ select.input-field{cursor:pointer;}
 <!-- ══ 2. BUCKET LIST ══ -->
 <div class="section" id="sec-bucket">
   <div class="card" style="padding:16px;">
-    <div class="section-label">꿈 LIST — 2020 ~ 2026</div>
+    <div class="section-label">꿈 LIST — 2026 ~ 2032</div>
     <div class="sub-tabs">
       <button class="sub-tab active" onclick="switchTab('bucket','todo')">하고싶은 것</button>
       <button class="sub-tab" onclick="switchTab('bucket','travel')">가고싶은 여행지</button>
@@ -333,7 +333,7 @@ select.input-field{cursor:pointer;}
       <div class="input-row" style="gap:8px;margin-bottom:8px;">
         <select class="input-field" id="rstat" style="width:100px;">
           <option value="read">읽음</option>
-          <option value="wish">읽고싶어</option>
+          <option value="wish">위시</option>
         </select>
         <select class="input-field" id="rs" style="width:76px;">
           <option>⭐</option><option>⭐⭐</option><option>⭐⭐⭐</option><option selected>⭐⭐⭐⭐</option><option>⭐⭐⭐⭐⭐</option>
@@ -370,7 +370,7 @@ select.input-field{cursor:pointer;}
     <div class="card-title">Life Plan</div>
     <div style="overflow-x:auto;">
       <table class="life-table">
-        <thead><tr><th>영역</th><th>20s</th><th>30s</th><th>40s+</th></tr></thead>
+        <thead><tr><th>영역</th><th>30s</th><th>40s</th><th>50s+</th></tr></thead>
         <tbody id="ltbody"></tbody>
       </table>
     </div>
@@ -704,9 +704,9 @@ function renderLife(){
           <input class="life-cat-edit" style="color:${r.tc};background:${r.color};" value="${r.label}" onblur="lifeData[${i}].label=this.value;saveLife();" onclick="event.stopPropagation();">
         </span>
       </td>
-      <td><textarea class="life-ta" placeholder="20대 계획..." onblur="lifeData[${i}].d20=this.value;saveLife();">${r.d20||''}</textarea></td>
-      <td><textarea class="life-ta" placeholder="30대 계획..." onblur="lifeData[${i}].d30=this.value;saveLife();">${r.d30||''}</textarea></td>
-      <td><textarea class="life-ta" placeholder="40대+ 계획..." onblur="lifeData[${i}].d40=this.value;saveLife();">${r.d40||''}</textarea></td>
+      <td><textarea class="life-ta" placeholder="30대 계획..." onblur="lifeData[${i}].d20=this.value;saveLife();">${r.d20||''}</textarea></td>
+      <td><textarea class="life-ta" placeholder="40대 계획..." onblur="lifeData[${i}].d30=this.value;saveLife();">${r.d30||''}</textarea></td>
+      <td><textarea class="life-ta" placeholder="50대+ 계획..." onblur="lifeData[${i}].d40=this.value;saveLife();">${r.d40||''}</textarea></td>
     </tr>`).join('');
 }
 function addLifeRow(){lifeData.push({label:'새 영역',color:'#e8f0fe',tc:'#1558b0',d20:'',d30:'',d40:''});saveLife();renderLife();}
