@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="유리저널">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231a73e8'/%3E%3Ctext y='.9em' font-size='72' x='50%25' text-anchor='middle'%3E📔%3C/text%3E%3C/svg%3E">
+<title>유리 Grow Glow Journal</title>
+<style>@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap");</style>
+<style>
+:root {
+  --bg:#f8f9fa; --surface:#fff; --surface2:#f1f3f4; --border:#e8eaed;
+  --text:#202124; --text2:#5f6368; --text3:#9aa0a6;
+  --accent:#1a73e8; --accent-light:#e8f0fe;
+  --pink:#fce8e6; --pink-d:#d93025;
+  --green:#e6f4ea; --green-d:#188038;
+  --yellow:#fef7e0; --yellow-d:#f29900;
+  --blue:#e8f0fe; --blue-d:#1967d2;
+  --purple:#f3e8fd; --purple-d:#9334e6;
+  --shadow-sm:0 1px 3px rgba(60,64,67,.15),0 1px 2px rgba(60,64,67,.1);
+  --radius:12px; --nav-h:56px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5;}
+
+/* HEADER */
+.app-header{position:fixed;top:0;left:0;right:0;z-index:300;background:var(--surface);border-bottom:1px solid var(--border);height:var(--nav-h);display:flex;align-items:center;padding:0 16px;box-shadow:var(--shadow-sm);}
+.app-logo{display:flex;align-items:center;gap:10px;}
+.app-logo-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#1a73e8,#0d47a1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.app-logo-text{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-0.3px;white-space:nowrap;}
+.app-logo-text em{font-style:normal;color:var(--accent);}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--surface);border-top:1px solid var(--border);display:flex;height:60px;box-shadow:0 -1px 3px rgba(60,64,67,.1);}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:transparent;cursor:pointer;color:var(--text3);font-family:inherit;font-size:10px;font-weight:500;padding:6px 2px;transition:color .15s;}
+.bnav-btn.active{color:var(--accent);}
+.bnav-btn .bicon{width:40px;height:28px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;transition:background .15s;}
+.bnav-btn.active .bicon{background:var(--accent-light);}
+
+/* TOP NAV */
+.top-nav{position:fixed;top:var(--nav-h);left:0;right:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;height:44px;align-items:stretch;padding:0 8px;}
+.top-nav::-webkit-scrollbar{display:none;}
+.tnav-btn{flex-shrink:0;padding:0 14px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;}
+.tnav-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* SECTIONS */
+.section{display:none;padding:calc(var(--nav-h) + 44px + 12px) 12px calc(60px + 16px);max-width:600px;margin:0 auto;animation:fadeIn .2s ease;}
+.section.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARDS */
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow-sm);margin-bottom:12px;overflow:hidden;}
+.card-header{padding:16px 16px 0;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);}
+.card-title{padding:4px 16px 12px;font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.3px;}
+
+/* INPUTS */
+.input-field{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);font-family:inherit;font-size:14px;color:var(--text);outline:none;transition:border-color .15s;}
+.input-field:focus{border-color:var(--accent);background:var(--surface);}
+.input-field::placeholder{color:var(--text3);}
+textarea.input-field{resize:none;min-height:72px;line-height:1.6;}
+select.input-field{cursor:pointer;}
+.input-row{display:flex;gap:8px;align-items:center;}
+.field-group{margin-bottom:10px;}
+
+/* BUTTONS */
+.btn{padding:8px 18px;border:none;border-radius:8px;font-family:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#1558b0;}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--text2);}
+.btn-ghost:hover{background:var(--surface2);}
+.btn-danger{background:var(--pink);color:var(--pink-d);}
+.btn-sm{padding:5px 12px;font-size:13px;border-radius:6px;}
+.del-btn{background:none;border:none;color:var(--text3);cursor:pointer;padding:4px 6px;border-radius:4px;font-size:16px;line-height:1;}
+.del-btn:hover{background:var(--pink);color:var(--pink-d);}
+
+/* SUB TABS */
+.sub-tabs{display:flex;background:var(--surface2);border-radius:10px;padding:3px;margin-bottom:14px;}
+.sub-tab{flex:1;padding:7px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;border-radius:8px;transition:all .15s;}
+.sub-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);}
+.sub-pane{display:none;}
+.sub-pane.active{display:block;}
+
+/* LIST ITEMS */
+.list-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);transition:background .12s;}
+.list-item:last-child{border-bottom:none;}
+.list-item:hover{background:var(--bg);}
+.checkbox{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.checkbox.checked{background:var(--accent);border-color:var(--accent);}
+.checkbox.checked::after{content:'✓';color:#fff;font-size:11px;font-weight:700;}
+.item-text{flex:1;font-size:14px;}
+.item-text.done{text-decoration:line-through;color:var(--text3);}
+.item-meta{font-size:12px;color:var(--text3);white-space:nowrap;}
+.section-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);padding:0 4px;margin-bottom:8px;}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:28px 16px;color:var(--text3);font-size:14px;}
+.empty-state .ei{font-size:28px;margin-bottom:6px;}
+
+/* MODAL OVERLAY */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--surface);border-radius:16px;padding:24px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.2);}
+.modal-title{font-size:18px;font-weight:700;margin-bottom:16px;color:var(--text);}
+.modal-close{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);margin-top:-4px;}
+.modal-content{font-size:15px;line-height:1.7;color:var(--text);white-space:pre-wrap;word-break:break-all;}
+
+/* ══════ MVV ══════ */
+.mvv-block{padding:14px 16px;border-bottom:1px solid var(--border);}
+.mvv-block:last-child{border-bottom:none;}
+.mvv-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.mvv-ta{width:100%;border:none;background:transparent;font-family:inherit;font-size:15px;color:var(--text);resize:none;outline:none;min-height:64px;line-height:1.6;}
+
+/* ══════ LIFE PLAN ══════ */
+.life-table{width:100%;border-collapse:collapse;}
+.life-table th{padding:9px 10px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);background:var(--surface2);border-bottom:1px solid var(--border);text-align:center;white-space:nowrap;}
+.life-table th:first-child{text-align:left;width:86px;}
+.life-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;max-width:160px;overflow-x:auto;}
+.life-table tr:last-child td{border-bottom:none;}
+.life-cat-wrap{display:flex;align-items:center;gap:4px;}
+.life-cat{display:inline-flex;align-items:center;justify-content:center;padding:3px 8px;border-radius:16px;font-size:12px;font-weight:600;white-space:normal;word-break:keep-all;line-height:1.3;text-align:center;}
+.life-cat-edit{border:none;background:transparent;font-family:inherit;font-size:12px;font-weight:600;color:inherit;width:60px;outline:none;text-align:center;}
+.life-ta{width:100%;min-width:200px;border:none;background:transparent;font-family:inherit;font-size:13px;color:var(--text);resize:none;outline:none;min-height:52px;line-height:1.5;white-space:pre;overflow-x:auto;}
+
+/* ══════ MANDARAT ══════ */
+.mgrid{display:grid;grid-template-columns:repeat(9,1fr);gap:2px;}
+.mcell{aspect-ratio:1;border-radius:3px;display:flex;align-items:center;justify-content:center;background:var(--surface2);position:relative;cursor:pointer;}
+.mcell input{width:100%;height:100%;border:none;background:transparent;outline:none;font-family:inherit;font-size:9px;font-weight:500;text-align:left;color:var(--text);padding:2px;line-height:1.2;cursor:pointer;overflow:hidden;text-overflow:clip;white-space:nowrap;}
+.mcell input:focus{background:var(--accent-light);border-radius:3px;}
+.mcell.c-center{background:var(--accent);}
+.mcell.c-center input{color:#fff;font-weight:700;font-size:8px;}
+.mcell.c-sub{background:var(--surface);border:1.5px solid var(--border);}
+.mcell.c-sub input{font-weight:600;}
+.mandarat-zoom-btn{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;padding:6px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--surface);font-family:inherit;font-size:13px;cursor:pointer;color:var(--text2);}
+.mandarat-zoom-btn:hover{background:var(--surface2);}
+
+/* Mandarat zoom modal */
+.m-zoom-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;}
+.m-zoom-cell{aspect-ratio:1;border-radius:4px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:500;color:var(--text);padding:3px;line-height:1.3;background:var(--surface2);}
+.m-zoom-cell.zc-center{background:var(--accent);color:#fff;font-weight:700;}
+.m-zoom-cell.zc-sub{border:1.5px solid var(--border);background:var(--surface);font-weight:600;}
+
+/* ══════ QUARTER ══════ */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.q-box{background:var(--surface);border-radius:10px;border:1.5px solid var(--border);padding:12px;position:relative;}
+.q-box-header{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
+.q-box-label{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;flex:1;}
+.q-box-drag{cursor:grab;color:var(--text3);font-size:14px;padding:2px;}
+.q-ta{width:100%;border:none;background:transparent;font-family:inherit;font-size:13px;color:var(--text);resize:none;outline:none;min-height:80px;line-height:1.5;}
+
+/* ══════ MONTHLY ══════ */
+.month-sel-row{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);}
+.month-sel{border:none;background:transparent;font-family:inherit;font-size:20px;font-weight:700;color:var(--text);outline:none;cursor:pointer;padding:2px 4px;}
+.day-row{display:grid;grid-template-columns:30px 22px 1fr 28px;gap:6px;align-items:center;padding:6px 14px;border-bottom:1px solid var(--border);cursor:pointer;}
+.day-row:last-child{border-bottom:none;}
+.day-row:hover{background:var(--bg);}
+.day-num{font-size:13px;font-weight:600;color:var(--text);text-align:right;}
+.day-dow{font-size:11px;color:var(--text3);text-align:center;font-weight:500;}
+.day-preview{font-size:13px;color:var(--text2);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.day-expand-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:2px;}
+
+/* ══════ HABIT ══════ */
+.habit-table-wrap{position:relative;overflow:hidden;}
+.habit-scroll-area{overflow-x:auto;margin-left:120px;}
+.habit-fixed-col{position:absolute;left:0;top:0;width:120px;background:var(--surface);z-index:10;}
+.habit-header-fixed{height:28px;display:flex;align-items:center;padding:0 8px;font-size:11px;font-weight:600;color:var(--text3);border-bottom:1px solid var(--border);}
+.habit-name-cell{height:28px;display:flex;align-items:center;padding:0 8px;font-size:12px;font-weight:500;color:var(--text2);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.habit-name-cell.sum-cell{font-weight:700;color:var(--accent);}
+.habit-scroll-inner{min-width:max-content;}
+.habit-days-header{display:flex;height:28px;border-bottom:1px solid var(--border);}
+.h-day-lbl{width:24px;flex-shrink:0;text-align:center;font-size:10px;color:var(--text3);font-weight:500;display:flex;align-items:center;justify-content:center;}
+.habit-data-row{display:flex;height:28px;border-bottom:1px solid var(--border);}
+.h-cell{width:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.h-dot{width:18px;height:18px;border-radius:4px;background:var(--border);cursor:pointer;transition:all .12s;}
+.h-dot.on{background:var(--accent);}
+.habit-sum-row{display:flex;height:28px;border-bottom:1px solid var(--border);}
+.h-sum-cell{width:24px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--accent);}
+
+/* Habit graph */
+.habit-graph{margin-top:14px;padding:0 4px;}
+.habit-graph-title{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.graph-bars{display:flex;align-items:flex-end;gap:2px;height:60px;overflow-x:auto;padding-bottom:2px;}
+.graph-bar-wrap{flex-shrink:0;width:8px;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.graph-bar{width:8px;background:var(--accent);border-radius:2px 2px 0 0;min-height:2px;transition:height .3s;}
+.graph-lbl{font-size:8px;color:var(--text3);white-space:nowrap;}
+
+/* ══════ WEEKLY ══════ */
+.week-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
+.week-day{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:10px 14px;min-height:60px;cursor:pointer;transition:box-shadow .15s;display:flex;align-items:flex-start;gap:12px;}
+.week-day:hover{box-shadow:var(--shadow-sm);}
+.wd-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;margin-bottom:2px;white-space:nowrap;}
+.wd-num{font-size:22px;font-weight:700;color:var(--text);margin-bottom:0;}
+.wd-task{display:flex;gap:3px;align-items:flex-start;margin-bottom:2px;}
+.wd-chk{width:9px;height:9px;border:1.5px solid var(--border);border-radius:2px;flex-shrink:0;margin-top:3px;cursor:pointer;transition:all .12s;}
+.wd-chk.done{background:var(--accent);border-color:var(--accent);}
+.wd-txt{font-size:10px;color:var(--text);line-height:1.3;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.wd-txt.done{text-decoration:line-through;color:var(--text3);}
+.wd-more{font-size:10px;color:var(--text3);margin-top:2px;}
+.week-notes{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:12px;min-height:70px;font-family:inherit;font-size:14px;color:var(--text);outline:none;}
+
+/* Weekly modal */
+.wday-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.wday-task-full{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--border);}
+.wday-task-full:last-child{border-bottom:none;}
+
+/* ══════ DAILY ══════ */
+.daily-date-row{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);}
+.daily-date-input{border:none;background:transparent;font-family:inherit;font-size:20px;font-weight:700;color:var(--text);outline:none;cursor:pointer;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.daily-box{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:12px;overflow:hidden;}
+.daily-box-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+.task-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;}
+.task-check{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;cursor:pointer;transition:all .12s;margin-top:1px;display:flex;align-items:center;justify-content:center;}
+.task-check.done{background:var(--accent);border-color:var(--accent);}
+.task-check.done::after{content:'✓';color:#fff;font-size:10px;}
+.task-text{font-size:13px;color:var(--text);flex:1;line-height:1.4;}
+.task-text.done{text-decoration:line-through;color:var(--text3);}
+.time-row{display:flex;gap:8px;align-items:stretch;padding:3px 0;border-bottom:1px solid var(--border);}
+.time-row:last-child{border-bottom:none;}
+.time-lbl{font-size:11px;color:var(--text3);width:36px;flex-shrink:0;padding-top:3px;font-weight:500;}
+.time-bar{width:3px;border-radius:2px;flex-shrink:0;margin:2px 0;}
+.time-content{flex:1;border:none;background:transparent;font-family:inherit;font-size:14px;color:var(--text);outline:none;min-height:24px;padding:2px 4px;}
+
+/* READING TABLE */
+.rtable{width:100%;border-collapse:collapse;font-size:13px;}
+.rtable th{padding:8px 8px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);background:var(--surface2);border-bottom:1px solid var(--border);text-align:left;}
+.rtable td{padding:8px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.rtable tr:last-child td{border-bottom:none;}
+.rtable tr:hover td{background:var(--bg);}
+
+.wd-date-col{flex-shrink:0;width:52px;text-align:center;padding-top:2px;}
+.wd-tasks-col{flex:1;}
+.wd-task{display:flex;gap:6px;align-items:flex-start;margin-bottom:4px;}
+.wd-txt{font-size:13px;color:var(--text);line-height:1.4;flex:1;}
+.wd-txt.done{text-decoration:line-through;color:var(--text3);}
+.wd-chk{width:14px;height:14px;border:1.5px solid var(--border);border-radius:3px;flex-shrink:0;margin-top:2px;cursor:pointer;transition:all .12s;display:flex;align-items:center;justify-content:center;}
+.wd-chk.done{background:var(--accent);border-color:var(--accent);}
+.wd-chk.done::after{content:'';width:6px;height:6px;background:white;border-radius:1px;}
+.wd-more{font-size:11px;color:var(--text3);margin-top:2px;}
+@media(max-width:480px){
+  .week-grid{flex-direction:column;}
+  .two-col{grid-template-columns:1fr;}
+  .q-grid{grid-template-columns:1fr;}
+  .wday-modal-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="app-logo">
+    <div class="app-logo-icon">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <rect x="2" y="3" width="14" height="17" rx="2" fill="white" opacity=".9"/>
+        <rect x="6" y="1" width="14" height="17" rx="2" fill="white" opacity=".6"/>
+        <rect x="4" y="2" width="14" height="17" rx="2" fill="white" opacity=".8"/>
+        <line x1="7" y1="8" x2="15" y2="8" stroke="#1a73e8" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="7" y1="11" x2="15" y2="11" stroke="#1a73e8" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="7" y1="14" x2="12" y2="14" stroke="#1a73e8" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="app-logo-text">유리 <em>Grow Glow</em> Journal</div>
+  </div>
+</header>
+
+<!-- TOP NAV -->
+<nav class="top-nav" id="top-nav"></nav>
+
+<!-- ══ 1. MVV ══ -->
+<div class="section active" id="sec-mvv">
+  <div class="card">
+    <div class="card-header">인생을 대하는 마음가짐</div>
+    <div class="card-title">Mission · Vision · Core Value</div>
+    <div class="mvv-block">
+      <div class="mvv-label"><span style="display:inline-flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>Mission — 사명</span></div>
+      <textarea class="mvv-ta" id="mvv-mission" placeholder="나의 미션을 적어보세요..."></textarea>
+    </div>
+    <div class="mvv-block">
+      <div class="mvv-label"><span style="display:inline-flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Vision — 비전</span></div>
+      <textarea class="mvv-ta" id="mvv-vision" placeholder="5년 후, 10년 후 나의 모습..."></textarea>
+    </div>
+    <div class="mvv-block">
+      <div class="mvv-label"><span style="display:inline-flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg>Core Value — 핵심가치</span></div>
+      <textarea class="mvv-ta" id="mvv-core" placeholder="내가 인생에서 중요하게 여기는 것들..."></textarea>
+    </div>
+    <div style="padding:12px 16px;text-align:right;">
+      <button class="btn btn-primary" onclick="saveMvv(this)">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 2. BUCKET LIST ══ -->
+<div class="section" id="sec-bucket">
+  <div class="card" style="padding:16px;">
+    <div class="section-label">꿈 LIST — 2026 ~ 2032</div>
+    <div class="sub-tabs">
+      <button class="sub-tab active" onclick="switchTab('bucket','todo')">하고싶은 것</button>
+      <button class="sub-tab" onclick="switchTab('bucket','travel')">가고싶은 여행지</button>
+    </div>
+    <div id="bucket-todo" class="sub-pane active">
+      <div class="input-row field-group">
+        <input type="text" class="input-field" id="bi-todo" placeholder="하고 싶은 것...">
+        <input type="text" class="input-field" id="by-todo" placeholder="연도" style="width:68px;">
+        <button class="btn btn-primary btn-sm" onclick="addBucket('todo')" style="width:36px;padding:5px 0;font-size:18px;line-height:1;">+</button>
+      </div>
+      <div id="bl-todo"></div>
+    </div>
+    <div id="bucket-travel" class="sub-pane">
+      <div class="input-row field-group">
+        <input type="text" class="input-field" id="bi-travel" placeholder="가고 싶은 여행지...">
+        <input type="text" class="input-field" id="by-travel" placeholder="연도" style="width:68px;">
+        <button class="btn btn-primary btn-sm" onclick="addBucket('travel')" style="width:36px;padding:5px 0;font-size:18px;line-height:1;">+</button>
+      </div>
+      <div id="bl-travel"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 3. READING ══ -->
+<div class="section" id="sec-reading">
+  <div class="card" style="padding:16px;">
+    <div class="section-label" style="margin-bottom:12px;">Reading Log &amp; Book Wish List</div>
+    <!-- Add book form -->
+    <div style="background:var(--surface2);border-radius:10px;padding:14px;margin-bottom:14px;">
+      <div style="font-size:12px;font-weight:600;color:var(--text3);margin-bottom:10px;letter-spacing:.5px;text-transform:uppercase;">새 책 추가</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+        <input type="text" class="input-field" id="rt" placeholder="책 제목 *" style="flex:2;min-width:120px;">
+        <input type="text" class="input-field" id="ra" placeholder="저자" style="flex:1;min-width:80px;">
+        <input type="text" class="input-field" id="rd" placeholder="날짜" style="width:78px;">
+      </div>
+      <div class="input-row" style="gap:8px;margin-bottom:8px;">
+        <select class="input-field" id="rstat" style="width:100px;">
+          <option value="read">읽음</option>
+          <option value="wish">읽고싶어</option>
+        </select>
+        <select class="input-field" id="rs" style="width:76px;">
+          <option>⭐</option><option>⭐⭐</option><option>⭐⭐⭐</option><option selected>⭐⭐⭐⭐</option><option>⭐⭐⭐⭐⭐</option>
+        </select>
+        <input type="text" class="input-field" id="rs2" placeholder="한 줄 감상 / 이유..." style="flex:1;">
+        <button class="btn btn-primary btn-sm" onclick="addBook()" style="width:36px;padding:5px 0;font-size:18px;line-height:1;">+</button>
+      </div>
+    </div>
+    <!-- Goal bar -->
+    <div style="background:var(--yellow);border-radius:8px;padding:9px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;font-size:14px;">
+      📖 2026 목표:
+      <input type="number" id="rgoal" value="30" style="width:44px;text-align:center;border:none;border-bottom:2px solid var(--yellow-d);background:transparent;font-size:14px;font-weight:700;outline:none;">권
+      <span id="rprog" style="margin-left:auto;font-size:12px;color:var(--text3);">0권 읽음</span>
+    </div>
+    <!-- Filter tabs -->
+    <div class="sub-tabs" style="margin-bottom:10px;">
+      <button class="sub-tab active" onclick="filterBooks('all')">전체</button>
+      <button class="sub-tab" onclick="filterBooks('read')">읽은 책</button>
+      <button class="sub-tab" onclick="filterBooks('wish')">읽고싶어</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="rtable">
+        <thead><tr><th>#</th><th>제목</th><th>저자</th><th>날짜</th><th>★</th><th>한줄/이유</th><th>상태</th><th></th></tr></thead>
+        <tbody id="rtbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 4. LIFE PLAN ══ -->
+<div class="section" id="sec-life">
+  <div class="card">
+    <div class="card-header">Future Log · 인생흐름계획</div>
+    <div class="card-title">Life Plan</div>
+    <div style="overflow-x:auto;">
+      <table class="life-table">
+        <thead><tr><th>영역</th><th>20대 성과</th><th>30s</th><th>40s+</th></tr></thead>
+        <tbody id="ltbody"></tbody>
+      </table>
+    </div>
+    <div style="padding:12px 16px;">
+      <button class="btn btn-ghost btn-sm" onclick="addLifeRow()">+ 영역 추가</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 5. MANDARAT ══ -->
+<div class="section" id="sec-mandarat">
+  <div class="card">
+    <div class="card-header">만다라트 · Annual Plan</div>
+    <div class="card-title">만다라트 1년계획</div>
+    <div style="padding:0 16px 16px;">
+      <p style="font-size:13px;color:var(--text3);margin-bottom:10px;">중심 목표 → 8개 영역 → 각 영역의 8개 실행목표</p>
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+        <button class="mandarat-zoom-btn" onclick="openMandaratZoom()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:4px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> 전체보기</button>
+        <button class="btn btn-ghost btn-sm" onclick="clearMandarat()">초기화</button>
+      </div>
+      <div class="mgrid" id="mgrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 6. MONTHLY ══ -->
+<div class="section" id="sec-monthly">
+  <div class="card">
+    <div class="month-sel-row">
+      <select id="mmon" class="month-sel" onchange="renderMonthly()">
+        <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+        <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+        <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+        <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+      </select>
+      <select id="myr" class="month-sel" onchange="renderMonthly()">
+        <option>2025</option><option selected>2026</option><option>2027</option>
+      </select>
+      <span style="margin-left:auto;font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1px;">한 줄 일기</span>
+    </div>
+    <div id="mdays"></div>
+  </div>
+</div>
+
+<!-- ══ 7. HABIT ══ -->
+<div class="section" id="sec-habit">
+  <div class="card" style="padding:16px;">
+    <div class="section-label">해빗트래커 · Habit Tracker</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+      <select id="hmon" class="input-field" style="width:130px;" onchange="renderHabit()">
+        <option value="0">January</option><option value="1">February</option><option value="2" selected>March</option>
+        <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+        <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+        <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+      </select>
+      <input type="text" class="input-field" id="hinput" placeholder="습관 이름..." style="flex:1;min-width:100px;">
+      <select class="input-field" id="hcolor" style="width:82px;">
+        <option value="#1a73e8">파랑</option><option value="#d93025">빨강</option>
+        <option value="#188038">초록</option><option value="#f29900">노랑</option>
+        <option value="#9334e6">보라</option><option value="#0f9d58">민트</option>
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="addHabit()" style="width:36px;padding:5px 0;font-size:18px;line-height:1;">+</button>
+    </div>
+    <div class="habit-table-wrap" id="habit-table-wrap">
+      <div class="habit-fixed-col" id="habit-fixed-col"></div>
+      <div class="habit-scroll-area" id="habit-scroll-area">
+        <div class="habit-scroll-inner" id="habit-scroll-inner"></div>
+      </div>
+    </div>
+    <div class="habit-graph" id="habit-graph"></div>
+  </div>
+</div>
+
+<!-- ══ 8. WEEKLY ══ -->
+<div class="section" id="sec-weekly">
+  <div class="card" style="padding:16px;">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <input type="week" id="wpicker" style="border:none;background:transparent;font-family:inherit;font-size:17px;font-weight:700;color:var(--text);outline:none;" onchange="renderWeekly()">
+    </div>
+    <div id="week-label" style="font-size:12px;color:var(--text3);margin-bottom:12px;"></div>
+    <div class="week-grid" id="wgrid"></div>
+    <div style="margin-top:4px;">
+      <div class="section-label" style="display:flex;align-items:center;gap:6px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Notes</div>
+      <div class="week-notes" contenteditable="true" id="wnotes" onblur="saveWNotes()"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 9. DAILY ══ -->
+<div class="section" id="sec-daily">
+  <div class="card" style="margin-bottom:10px;">
+    <div class="daily-date-row">
+      <span style="font-size:20px;"></span>
+      <input type="date" id="ddate" class="daily-date-input" onchange="renderDaily()">
+    </div>
+    <div style="padding:12px 16px 0;">
+      <div class="two-col">
+        <div class="daily-box" style="border-color:#fce8e6;">
+          <div class="daily-box-label">오늘의 목표</div>
+          <div id="dgoals"></div>
+          <div class="input-row" style="margin-top:8px;gap:6px;">
+            <input type="text" class="input-field" id="dgi" placeholder="목표 추가..." style="flex:1;padding:6px 10px;font-size:13px;">
+            <button class="btn btn-primary btn-sm" onclick="addDG()" style="width:32px;padding:4px 0;font-size:18px;line-height:1;">+</button>
+          </div>
+        </div>
+        <div class="daily-box" style="border-color:#e8f0fe;">
+          <div class="daily-box-label">To Do</div>
+          <div id="dtodos"></div>
+          <div class="input-row" style="margin-top:8px;gap:6px;">
+            <input type="text" class="input-field" id="dti" placeholder="할 일 추가..." style="flex:1;padding:6px 10px;font-size:13px;">
+            <button class="btn btn-primary btn-sm" onclick="addDT()" style="width:32px;padding:4px 0;font-size:18px;line-height:1;">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:0 16px 12px;">
+      <div class="daily-box-label" style="margin-bottom:8px;">Time Log</div>
+      <div id="tlog"></div>
+    </div>
+    <div style="padding:0 16px 16px;">
+      <div class="daily-box-label" style="margin-bottom:6px;">오늘의 한 줄</div>
+      <textarea class="input-field" id="dmemo" style="min-height:56px;" placeholder="오늘 하루를 한 줄로..." onblur="saveDM()"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 10. QUARTER ══ -->
+<div class="section" id="sec-quarter">
+  <div class="card" style="padding:16px;">
+    <div class="section-label">분기계획 · Quarter Plan</div>
+    <div class="sub-tabs">
+      <button class="sub-tab active" onclick="switchQ('Q1')">Q1</button>
+      <button class="sub-tab" onclick="switchQ('Q2')">Q2</button>
+      <button class="sub-tab" onclick="switchQ('Q3')">Q3</button>
+      <button class="sub-tab" onclick="switchQ('Q4')">Q4</button>
+    </div>
+    <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm" onclick="addQArea()">+ 영역 추가</button>
+    </div>
+    <div id="qcontent"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" id="bottom-nav"></nav>
+
+<!-- MODAL: monthly detail -->
+<div class="modal-overlay" id="modal-monthly" onclick="closeModal('modal-monthly')">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('modal-monthly')">×</button>
+    <div class="modal-title" id="modal-monthly-title"></div>
+    <textarea id="modal-monthly-ta" style="width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px;font-family:inherit;font-size:15px;line-height:1.7;resize:none;min-height:140px;outline:none;" placeholder="오늘 하루..."></textarea>
+    <div style="text-align:right;margin-top:12px;">
+      <button class="btn btn-primary btn-sm" onclick="saveModalMonthly()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: mandarat zoom -->
+<div class="modal-overlay" id="modal-mandarat" onclick="closeModal('modal-mandarat')">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width:560px;">
+    <button class="modal-close" onclick="closeModal('modal-mandarat')">×</button>
+    <div class="modal-title">만다라트 전체보기</div>
+    <div class="m-zoom-grid" id="m-zoom-grid"></div>
+  </div>
+</div>
+
+<!-- MODAL: weekly day detail -->
+<div class="modal-overlay" id="modal-wday" onclick="closeModal('modal-wday')">
+  <div class="modal-box" onclick="event.stopPropagation()" style="max-width:500px;">
+    <button class="modal-close" onclick="closeModal('modal-wday')">×</button>
+    <div class="modal-title" id="modal-wday-title"></div>
+    <div id="modal-wday-content"></div>
+  </div>
+</div>
+
+<script>
+// ══ STORAGE ══
+const get=k=>{try{return JSON.parse(localStorage.getItem('ggg_'+k));}catch{return null;}};
+const set=(k,v)=>localStorage.setItem('ggg_'+k,JSON.stringify(v));
+
+// ══ NAV ══
+const sections=[
+  {id:'mvv',label:'미션/비전',group:'plan'},
+  {id:'bucket',label:'버킷리스트',group:'plan'},
+  {id:'reading',label:'리딩로그',group:'plan'},
+  {id:'life',label:'인생계획',group:'plan'},
+  {id:'mandarat',label:'만다라트',group:'plan'},
+  {id:'monthly',label:'월간',group:'log'},
+  {id:'habit',label:'해빗',group:'log'},
+  {id:'weekly',label:'주간',group:'log'},
+  {id:'daily',label:'일간',group:'log'},
+  {id:'quarter',label:'분기계획',group:'log'},
+];
+let activeSection='mvv';
+function showSection(id){
+  // 섹션 이동 전 현재 데이터 저장
+  saveBeforeLeave();
+  activeSection=id;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id)?.classList.add('active');
+  document.querySelectorAll('.tnav-btn').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+  const grp=sections.find(s=>s.id===id)?.group;
+  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.toggle('active',b.dataset.group===grp));
+  renderTopNav(grp);
+}
+function saveBeforeLeave(){
+  // MVV
+  try{set('mvv',{mission:document.getElementById('mvv-mission').value,vision:document.getElementById('mvv-vision').value,core:document.getElementById('mvv-core').value});}catch(e){}
+  // Life plan textareas
+  try{document.querySelectorAll('#ltbody .life-ta').forEach((ta,idx)=>{const row=Math.floor(idx/3),col=idx%3;if(lifeData[row]){if(col===0)lifeData[row].d20=ta.value;else if(col===1)lifeData[row].d30=ta.value;else lifeData[row].d40=ta.value;}});saveLife();}catch(e){}
+  // Quarter plan
+  try{saveCurrentQTextareas();}catch(e){}
+  // Weekly notes
+  try{saveWNotes();}catch(e){}
+  // Daily memo
+  try{saveDM();}catch(e){}
+}
+function renderTopNav(group){
+  const nav=document.getElementById('top-nav');nav.innerHTML='';
+  sections.filter(s=>s.group===group).forEach(s=>{
+    const b=document.createElement('button');b.className='tnav-btn'+(s.id===activeSection?' active':'');
+    b.textContent=s.label;b.dataset.id=s.id;b.onclick=()=>showSection(s.id);nav.appendChild(b);
+  });
+}
+const bnavIcons={
+  plan:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  log:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`
+};
+const bnav=document.getElementById('bottom-nav');
+[{key:'plan',label:'계획',icon:'plan'},{key:'log',label:'기록',icon:'log'}].forEach(g=>{
+  const b=document.createElement('button');b.className='bnav-btn'+(g.key==='plan'?' active':'');b.dataset.group=g.key;
+  b.innerHTML=`<div class="bicon">${bnavIcons[g.icon]}</div><span>${g.label}</span>`;
+  b.onclick=()=>{const first=sections.find(s=>s.group===g.key);if(first)showSection(first.id);};
+  bnav.appendChild(b);
+});
+renderTopNav('plan');
+
+// ══ MODAL ══
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function openModal(id){document.getElementById(id).classList.add('open');}
+
+// ══ SUB TABS ══
+function switchTab(ns,tab){
+  const sec=document.getElementById('sec-'+ns);
+  sec.querySelectorAll('.sub-tab').forEach(b=>b.classList.remove('active'));
+  sec.querySelectorAll('.sub-pane').forEach(p=>p.classList.remove('active'));
+  [...sec.querySelectorAll('.sub-tab')].find(b=>b.getAttribute('onclick').includes("'"+tab+"'"))?.classList.add('active');
+  document.getElementById(ns+'-'+tab)?.classList.add('active');
+}
+
+// ══ 1. MVV ══
+(()=>{const d=get('mvv')||{};['mission','vision','core'].forEach(k=>{if(d[k])document.getElementById('mvv-'+k).value=d[k];});})();
+function saveMvv(btn){
+  set('mvv',{mission:document.getElementById('mvv-mission').value,vision:document.getElementById('mvv-vision').value,core:document.getElementById('mvv-core').value});
+  btn.textContent='저장됨 ✓';setTimeout(()=>btn.textContent='저장',1500);
+}
+['mvv-mission','mvv-vision','mvv-core'].forEach(id=>{
+  document.getElementById(id).addEventListener('blur',()=>{
+    set('mvv',{mission:document.getElementById('mvv-mission').value,vision:document.getElementById('mvv-vision').value,core:document.getElementById('mvv-core').value});
+  });
+});
+
+// ══ 2. BUCKET ══
+let buckets=get('buckets')||{todo:[],travel:[]};
+function saveBuckets(){set('buckets',buckets);}
+function renderBuckets(){
+  ['todo','travel'].forEach(type=>{
+    const el=document.getElementById('bl-'+type);
+    if(!buckets[type].length){el.innerHTML='<div class="empty-state"><div class="ei">'+(type==='todo'?'🌟':'✈️')+'</div>추가해보세요</div>';return;}
+    el.innerHTML='<div class="card" style="box-shadow:none;border:1px solid var(--border);">'+
+      buckets[type].map((item,i)=>`<div class="list-item">
+        <div class="checkbox ${item.done?'checked':''}" onclick="toggleB('${type}',${i})"></div>
+        <span class="item-text ${item.done?'done':''}">${item.text}</span>
+        ${item.year?`<span class="item-meta">${item.year}</span>`:''}
+        <button class="del-btn" onclick="removeB('${type}',${i})">×</button>
+      </div>`).join('')+'</div>';
+  });
+}
+function addBucket(type){
+  const t=document.getElementById('bi-'+type).value.trim();if(!t)return;
+  const y=document.getElementById('by-'+type).value.trim();
+  buckets[type].push({text:t,year:y,done:false});
+  document.getElementById('bi-'+type).value='';document.getElementById('by-'+type).value='';
+  saveBuckets();renderBuckets();
+}
+function toggleB(type,i){buckets[type][i].done=!buckets[type][i].done;saveBuckets();renderBuckets();}
+function removeB(type,i){buckets[type].splice(i,1);saveBuckets();renderBuckets();}
+['todo','travel'].forEach(type=>document.getElementById('bi-'+type).addEventListener('keydown',e=>{if(e.key==='Enter')addBucket(type);}));
+renderBuckets();
+
+// ══ 3. READING ══
+let books=get('books')||[];
+let bookFilter='all';
+function filterBooks(f){
+  bookFilter=f;
+  document.querySelectorAll('#sec-reading .sub-tab').forEach((b,i)=>b.classList.toggle('active',['all','read','wish'][i]===f));
+  renderBooks();
+}
+function renderBooks(){
+  const tb=document.getElementById('rtbody');
+  const filtered=books.filter(b=>bookFilter==='all'||b.status===bookFilter);
+  const readCount=books.filter(b=>b.status==='read').length;
+  document.getElementById('rprog').textContent=readCount+'권 읽음';
+  if(!filtered.length){tb.innerHTML='<tr><td colspan="8"><div class="empty-state"><div class="ei">📖</div>책을 추가해보세요</div></td></tr>';return;}
+  tb.innerHTML=filtered.map((b,i)=>{
+    const idx=books.indexOf(b);
+    return `<tr>
+      <td>${i+1}</td>
+      <td style="font-weight:500;">${b.t}</td>
+      <td>${b.a||''}</td>
+      <td>${b.d||''}</td>
+      <td>${b.status==='read'?b.s:''}</td>
+      <td style="color:var(--text3);max-width:120px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${b.sen||''}</td>
+      <td><span style="font-size:11px;background:${b.status==='read'?'var(--green)':'var(--yellow)'};color:${b.status==='read'?'var(--green-d)':'var(--yellow-d)'};padding:2px 8px;border-radius:10px;">${b.status==='read'?'읽음':'읽고싶어'}</span></td>
+      <td><button class="del-btn" onclick="removeBook(${idx})">×</button></td>
+    </tr>`;
+  }).join('');
+}
+function addBook(){
+  const t=document.getElementById('rt').value.trim();if(!t)return;
+  books.push({t,a:document.getElementById('ra').value,d:document.getElementById('rd').value,status:document.getElementById('rstat').value,s:document.getElementById('rs').value,sen:document.getElementById('rs2').value});
+  ['rt','ra','rd','rs2'].forEach(id=>document.getElementById(id).value='');
+  set('books',books);renderBooks();
+}
+function removeBook(i){books.splice(i,1);set('books',books);renderBooks();}
+renderBooks();
+
+// ══ 4. LIFE PLAN ══
+const defaultLifeCats=[
+  {label:'자기계발',color:'#fce8e6',tc:'#c5221f',d20:'',d30:'',d40:''},
+  {label:'본업',color:'#e6f4ea',tc:'#137333',d20:'',d30:'',d40:''},
+  {label:'새로운 도전',color:'#fef7e0',tc:'#a35a00',d20:'',d30:'',d40:''},
+  {label:'건강·육체',color:'#e8f0fe',tc:'#1558b0',d20:'',d30:'',d40:''},
+  {label:'가정',color:'#fce8e6',tc:'#a50e0e',d20:'',d30:'',d40:''},
+  {label:'사회·종교',color:'#f3e8fd',tc:'#6200ea',d20:'',d30:'',d40:''},
+];
+let lifeData=get('lifeplan')||defaultLifeCats.map(c=>({...c}));
+function saveLife(){set('lifeplan',lifeData);}
+function renderLife(){
+  document.getElementById('ltbody').innerHTML=lifeData.map((r,i)=>`
+    <tr>
+      <td>
+        <span class="life-cat" style="background:${r.color};color:${r.tc}">
+          <input class="life-cat-edit" style="color:${r.tc};background:${r.color};" value="${r.label}" onblur="lifeData[${i}].label=this.value;saveLife();" onclick="event.stopPropagation();">
+        </span>
+      </td>
+      <td><textarea class="life-ta" placeholder="20대 성과..." onblur="lifeData[${i}].d20=this.value;saveLife();">${r.d20||''}</textarea></td>
+      <td><textarea class="life-ta" placeholder="30대 계획..." onblur="lifeData[${i}].d30=this.value;saveLife();">${r.d30||''}</textarea></td>
+      <td><textarea class="life-ta" placeholder="40대+ 계획..." onblur="lifeData[${i}].d40=this.value;saveLife();">${r.d40||''}</textarea></td>
+    </tr>`).join('');
+  // touch scroll for each life-ta
+  document.querySelectorAll('.life-ta').forEach(ta=>{
+    let tx=0,ty=0,sl=0,st=0;
+    ta.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;sl=ta.scrollLeft;st=ta.scrollTop;},{passive:true});
+    ta.addEventListener('touchmove',e=>{
+      if(document.activeElement!==ta){
+        const dx=tx-e.touches[0].clientX;
+        const dy=ty-e.touches[0].clientY;
+        ta.scrollLeft=sl+dx;ta.scrollTop=st+dy;
+      }
+    },{passive:true});
+  });
+}
+function addLifeRow(){lifeData.push({label:'새 영역',color:'#e8f0fe',tc:'#1558b0',d20:'',d30:'',d40:''});saveLife();renderLife();}
+renderLife();
+
+// ══ 5. MANDARAT ══
+const mColors=['#fce8e6','#e6f4ea','#fef7e0','#e8f0fe','','#f3e8fd','#fce8e6','#e6f4f1','#fef7e0'];
+let mdata=get('mandarat')||Array(81).fill('');
+function buildMandarat(){
+  const grid=document.getElementById('mgrid');grid.innerHTML='';
+  for(let i=0;i<81;i++){
+    const br=Math.floor(i/27),bc=Math.floor((i%9)/3),block=br*3+bc;
+    const lr=Math.floor((i%27)/9),lc=i%3;
+    const isC=lr===1&&lc===1,isMain=block===4&&isC;
+    const cell=document.createElement('div');cell.className='mcell';
+    if(isMain)cell.classList.add('c-center');
+    else if(isC){cell.classList.add('c-sub');cell.style.background=mColors[block]||'var(--surface)';}
+    const inp=document.createElement('input');inp.type='text';inp.value=mdata[i]||'';
+    inp.style.color=isMain?'white':isC?'var(--text)':'var(--text2)';
+    inp.onchange=()=>{mdata[i]=inp.value;set('mandarat',mdata);};
+    // touch scroll: swipe left/right to scroll text
+    let touchStartX=0,scrollStart=0;
+    inp.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;scrollStart=inp.scrollLeft;},{passive:true});
+    inp.addEventListener('touchmove',e=>{
+      if(document.activeElement!==inp){
+        const dx=touchStartX-e.touches[0].clientX;
+        inp.scrollLeft=scrollStart+dx;
+      }
+    },{passive:true});
+    cell.appendChild(inp);grid.appendChild(cell);
+  }
+}
+function clearMandarat(){if(confirm('초기화할까요?')){mdata=Array(81).fill('');set('mandarat',mdata);buildMandarat();}}
+function openMandaratZoom(){
+  const zg=document.getElementById('m-zoom-grid');zg.innerHTML='';
+  const mc=['#fce8e6','#e6f4ea','#fef7e0','#e8f0fe','','#f3e8fd','#fce8e6','#e6f4f1','#fef7e0'];
+  for(let i=0;i<81;i++){
+    const br=Math.floor(i/27),bc=Math.floor((i%9)/3),block=br*3+bc;
+    const lr=Math.floor((i%27)/9),lc=i%3;
+    const isC=lr===1&&lc===1,isMain=block===4&&isC;
+    const cell=document.createElement('div');cell.className='m-zoom-cell';
+    if(isMain)cell.classList.add('zc-center');
+    else if(isC){cell.classList.add('zc-sub');cell.style.background=mc[block]||'var(--surface)';}
+    cell.textContent=mdata[i]||'';
+    zg.appendChild(cell);
+  }
+  openModal('modal-mandarat');
+}
+buildMandarat();
+
+// ══ 6. MONTHLY ══
+const dowLabels=['S','M','T','W','T','F','S'];
+let mlyData=get('monthly')||{};
+let modalMonthlyKey='';
+function renderMonthly(){
+  const m=parseInt(document.getElementById('mmon').value);
+  const y=parseInt(document.getElementById('myr').value);
+  const key=y+'-'+m;
+  const days=new Date(y,m+1,0).getDate();
+  const el=document.getElementById('mdays');el.innerHTML='';
+  for(let d=1;d<=days;d++){
+    const dow=new Date(y,m,d).getDay();
+    const dk=key+'-'+d;
+    const row=document.createElement('div');row.className='day-row';
+    const dn=document.createElement('div');dn.className='day-num';dn.textContent=d;
+    if(dow===0)dn.style.color='#d93025';if(dow===6)dn.style.color='#1a73e8';
+    const dl=document.createElement('div');dl.className='day-dow';dl.textContent=dowLabels[dow];
+    const preview=document.createElement('div');preview.className='day-preview';
+    preview.textContent=mlyData[dk]||'';
+    const expBtn=document.createElement('button');expBtn.className='day-expand-btn';expBtn.textContent='✏️';
+    expBtn.onclick=(e)=>{e.stopPropagation();openMonthlyModal(dk,d,m,y);};
+    row.onclick=()=>openMonthlyModal(dk,d,m,y);
+    row.appendChild(dn);row.appendChild(dl);row.appendChild(preview);row.appendChild(expBtn);
+    el.appendChild(row);
+  }
+}
+function openMonthlyModal(dk,d,m,y){
+  modalMonthlyKey=dk;
+  const months=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  document.getElementById('modal-monthly-title').textContent=y+'년 '+months[m]+' '+d+'일';
+  document.getElementById('modal-monthly-ta').value=mlyData[dk]||'';
+  openModal('modal-monthly');
+}
+function saveModalMonthly(){
+  const val=document.getElementById('modal-monthly-ta').value;
+  mlyData[modalMonthlyKey]=val;set('monthly',mlyData);
+  renderMonthly();closeModal('modal-monthly');
+}
+document.getElementById('mmon').value=new Date().getMonth();
+renderMonthly();
+
+// ══ 7. HABIT ══
+// habits: [{name, color}]  — no check data here
+// habitChecks: { 'YYYY-M': [ [bool,...31], ... ] }  — per month per habit
+let habits=get('habits')||[];
+let habitChecks=get('habitChecks')||{};
+function getHMonKey(){const m=parseInt(document.getElementById('hmon').value);return new Date().getFullYear()+'-'+m;}
+function getDays(){const m=parseInt(document.getElementById('hmon').value);const y=new Date().getFullYear();return new Date(y,m+1,0).getDate();}
+function saveHabits(){set('habits',habits);}
+function saveHabitChecks(){set('habitChecks',habitChecks);}
+function getMonthChecks(){
+  const mk=getHMonKey();
+  const days=getDays();
+  if(!habitChecks[mk])habitChecks[mk]=[];
+  // ensure array length matches habits
+  while(habitChecks[mk].length<habits.length)habitChecks[mk].push(Array(days).fill(false));
+  return habitChecks[mk];
+}
+function renderHabit(){
+  const days=getDays();
+  const checks=getMonthChecks();
+  const fixedCol=document.getElementById('habit-fixed-col');
+  const scrollInner=document.getElementById('habit-scroll-inner');
+  const rowH=28;
+  const totalRows=habits.length+2;
+  fixedCol.style.height=(totalRows*rowH)+'px';
+
+  fixedCol.innerHTML='<div class="habit-header-fixed">습관</div>'+
+    habits.map((h,hi)=>`<div class="habit-name-cell" title="${h.name}" style="border-left:3px solid ${h.color}">${h.name} <button class="del-btn" onclick="removeHabit(${hi})" style="font-size:12px;padding:0 2px;">×</button></div>`).join('')+
+    '<div class="habit-name-cell sum-cell">합계</div>';
+
+  const dayNums=Array.from({length:days},(_,i)=>`<div class="h-day-lbl">${i+1}</div>`).join('');
+  const dataRows=habits.map((h,hi)=>{
+    const row=checks[hi]||Array(days).fill(false);
+    const cells=Array.from({length:days},(_,di)=>`<div class="h-cell"><div class="h-dot ${row[di]?'on':''}" style="${row[di]?'background:'+h.color:''}" onclick="toggleH(${hi},${di},${days})"></div></div>`).join('');
+    return `<div class="habit-data-row">${cells}</div>`;
+  }).join('');
+
+  const sumCells=Array.from({length:days},(_,di)=>{
+    const cnt=habits.filter((_,hi)=>(checks[hi]||[])[di]).length;
+    return `<div class="h-sum-cell">${cnt>0?cnt:''}</div>`;
+  }).join('');
+
+  scrollInner.innerHTML=`<div class="habit-days-header">${dayNums}</div>${dataRows}<div class="habit-sum-row">${sumCells}</div>`;
+  renderHabitGraph(days,checks);
+}
+function renderHabitGraph(days,checks){
+  if(!habits.length){document.getElementById('habit-graph').innerHTML='';return;}
+  const sums=Array.from({length:days},(_,di)=>habits.filter((_,hi)=>(checks[hi]||[])[di]).length);
+  const max=Math.max(...sums,1);
+  const bars=sums.map((s,i)=>`<div class="graph-bar-wrap"><div class="graph-bar" style="height:${Math.round((s/max)*50)+2}px;background:${s>0?'var(--accent)':'var(--border)'};"></div><div class="graph-lbl">${i+1}</div></div>`).join('');
+  document.getElementById('habit-graph').innerHTML=`<div class="habit-graph-title">일별 달성 현황</div><div class="graph-bars">${bars}</div>`;
+}
+function addHabit(){
+  const n=document.getElementById('hinput').value.trim();if(!n)return;
+  const color=document.getElementById('hcolor').value;
+  habits.push({name:n,color});
+  document.getElementById('hinput').value='';saveHabits();renderHabit();
+}
+function removeHabit(hi){
+  if(!confirm(habits[hi].name+'을(를) 삭제할까요?'))return;
+  habits.splice(hi,1);
+  // remove from all month checks
+  Object.keys(habitChecks).forEach(mk=>{if(habitChecks[mk])habitChecks[mk].splice(hi,1);});
+  saveHabits();saveHabitChecks();renderHabit();
+}
+function toggleH(hi,di,days){
+  const mk=getHMonKey();
+  const checks=getMonthChecks();
+  if(!checks[hi])checks[hi]=Array(days).fill(false);
+  checks[hi][di]=!checks[hi][di];
+  habitChecks[mk]=checks;saveHabitChecks();renderHabit();
+}
+renderHabit();
+
+// ══ 8. WEEKLY ══
+const wDays=['MON','TUE','WED','THU','FRI','SAT','SUN'];
+let wTasks=get('wtasks')||{};
+function getWK(){return document.getElementById('wpicker').value||'2026-W01';}
+function getWeekDates(wk){
+  const [yr,wn]=wk.split('-W').map(Number);
+  const jan1=new Date(yr,0,1);
+  const dow=jan1.getDay()||7;
+  const mon=new Date(jan1);mon.setDate(jan1.getDate()+(wn-1)*7-(dow-1));
+  return Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d;});
+}
+function fmt(d){return (d.getMonth()+1)+'/'+(d.getDate());}
+function renderWeekly(){
+  const wk=getWK();
+  const dates=getWeekDates(wk);
+  // Week label
+  const [yr,wn]=wk.split('-W').map(Number);
+  document.getElementById('week-label').textContent=`${wn}번째 주 (${fmt(dates[0])} ~ ${fmt(dates[6])})`;
+  document.getElementById('wgrid').innerHTML=wDays.map((d,i)=>{
+    const key=wk+'-'+d;
+    const tasks=wTasks[key]||[];
+    const date=dates[i];
+    const isSun=i===6,isSat=i===5;
+    const numColor=isSun?'#d93025':isSat?'#1a73e8':'var(--text)';
+    const preview=tasks.slice(0,4).map(t=>`<div class="wd-task"><div class="wd-chk ${t.done?'done':''}"></div><span class="wd-txt ${t.done?'done':''}">${t.text}</span></div>`).join('');
+    const more=tasks.length>4?`<div class="wd-more">+${tasks.length-4}개 더 →</div>`:'';
+    const addHint=tasks.length===0?`<div style="font-size:11px;color:var(--text3);">+ 탭해서 추가</div>`:'';
+    return `<div class="week-day" onclick="openWdayModal('${wk}','${d}',${i})">
+      <div class="wd-date-col">
+        <div class="wd-label">${d}</div>
+        <div class="wd-num" style="color:${numColor}">${date.getDate()}</div>
+      </div>
+      <div class="wd-tasks-col">${preview}${more}${addHint}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('wnotes').textContent=wTasks[wk+'-notes']||'';
+}
+function openWdayModal(wk,day,dayIdx){
+  const key=wk+'-'+day;
+  const tasks=wTasks[key]||[];
+  const dates=getWeekDates(wk);
+  const date=dates[dayIdx];
+  document.getElementById('modal-wday-title').textContent=`${day} · ${fmt(date)}`;
+  const content=document.getElementById('modal-wday-content');
+  content.innerHTML=`
+    <div id="modal-tasks">${tasks.length?tasks.map((t,ti)=>`
+      <div class="wday-task-full">
+        <div class="wd-chk ${t.done?'done':''}" style="width:14px;height:14px;border-radius:3px;" onclick="toggleWTModal('${key}',${ti})"></div>
+        <span style="flex:1;font-size:14px;${t.done?'text-decoration:line-through;color:var(--text3)':''}">${t.text}</span>
+        <button class="del-btn" onclick="removeWT('${key}',${ti})">×</button>
+      </div>`).join(''):'<div class="empty-state" style="padding:16px 0;"><div class="ei">📝</div>할 일을 추가해보세요</div>'}</div>
+    <div class="input-row" style="margin-top:12px;gap:8px;">
+      <input type="text" class="input-field" id="wmodal-inp" placeholder="할 일 추가..." style="flex:1;">
+      <button class="btn btn-primary btn-sm" onclick="addWTModal('${key}','${wk}','${day}',${dayIdx})">추가</button>
+    </div>`;
+  openModal('modal-wday');
+  setTimeout(()=>document.getElementById('wmodal-inp')?.focus(),100);
+}
+function addWT(key,text){text=text.trim();if(!text)return;if(!wTasks[key])wTasks[key]=[];wTasks[key].push({text,done:false});set('wtasks',wTasks);renderWeekly();}
+function addWTModal(key,wk,day,dayIdx){
+  const inp=document.getElementById('wmodal-inp');
+  const t=inp.value.trim();if(!t)return;
+  if(!wTasks[key])wTasks[key]=[];wTasks[key].push({text:t,done:false});inp.value='';
+  set('wtasks',wTasks);renderWeekly();openWdayModal(wk,day,dayIdx);
+}
+function toggleWT(key,i){wTasks[key][i].done=!wTasks[key][i].done;set('wtasks',wTasks);renderWeekly();}
+function toggleWTModal(key,i){wTasks[key][i].done=!wTasks[key][i].done;set('wtasks',wTasks);}
+function removeWT(key,i){wTasks[key].splice(i,1);set('wtasks',wTasks);renderWeekly();closeModal('modal-wday');}
+function saveWNotes(){const k=getWK()+'-notes';wTasks[k]=document.getElementById('wnotes').textContent;set('wtasks',wTasks);}
+(()=>{const now=new Date(),y=now.getFullYear(),start=new Date(y,0,1),w=Math.ceil(((now-start)/86400000+start.getDay()+1)/7);document.getElementById('wpicker').value=y+'-W'+String(w).padStart(2,'0');renderWeekly();})();
+
+// ══ 9. DAILY ══
+let ddata=get('ddata')||{};
+const tColors=['#fce8e6','#fce8e6','#e8f0fe','#e8f0fe','#e6f4ea','#e6f4ea','#fef7e0','#fef7e0','#f3e8fd','#f3e8fd','#fce8e6','#fce8e6','#e6f4f1','#e6f4f1','#fef7e0','#fef7e0','#e8f0fe'];
+function getDK(){return document.getElementById('ddate').value;}
+function renderDaily(){
+  const key=getDK();const d=ddata[key]||{goals:[],todos:[],memo:''};
+  // carry over undone todos from previous day
+  carryOverTodos(key);
+  renderDGoals(ddata[key]?.goals||[]);
+  renderDTodos(ddata[key]?.todos||[]);
+  document.getElementById('dmemo').value=ddata[key]?.memo||'';
+  renderTLog(key);
+}
+function carryOverTodos(key){
+  const dateObj=new Date(key);dateObj.setDate(dateObj.getDate()-1);
+  const prevKey=dateObj.toISOString().slice(0,10);
+  const prev=ddata[prevKey];
+  if(!prev||!prev.todos)return;
+  const undone=prev.todos.filter(t=>!t.done);
+  if(!undone.length)return;
+  if(!ddata[key])ddata[key]={goals:[],todos:[],memo:''};
+  // add undone ones not already present
+  const existing=new Set((ddata[key].todos||[]).map(t=>t.text));
+  undone.forEach(t=>{if(!existing.has(t.text)){ddata[key].todos.push({text:t.text+'(이월)',done:false});}});
+  set('ddata',ddata);
+}
+function ensureD(){const k=getDK();if(!ddata[k])ddata[k]={goals:[],todos:[],memo:''};return k;}
+function renderDGoals(goals){
+  document.getElementById('dgoals').innerHTML=goals.map((g,i)=>`
+    <div class="task-item">
+      <div class="task-check ${g.done?'done':''}" onclick="toggleDG(${i})"></div>
+      <span class="task-text ${g.done?'done':''}">${g.text}</span>
+      <button class="del-btn" onclick="removeDG(${i})" style="font-size:13px;">×</button>
+    </div>`).join('');
+}
+function addDG(){const k=ensureD();const t=document.getElementById('dgi').value.trim();if(!t)return;ddata[k].goals.push({text:t,done:false});document.getElementById('dgi').value='';set('ddata',ddata);renderDGoals(ddata[k].goals);}
+function toggleDG(i){const k=getDK();ddata[k].goals[i].done=!ddata[k].goals[i].done;set('ddata',ddata);renderDGoals(ddata[k].goals);}
+function removeDG(i){const k=getDK();ddata[k].goals.splice(i,1);set('ddata',ddata);renderDGoals(ddata[k].goals);}
+function renderDTodos(todos){
+  document.getElementById('dtodos').innerHTML=todos.map((t,i)=>`
+    <div class="task-item">
+      <div class="task-check ${t.done?'done':''}" onclick="toggleDT(${i})"></div>
+      <span class="task-text ${t.done?'done':''}">${t.text}</span>
+      <button class="del-btn" onclick="removeDT(${i})" style="font-size:13px;">×</button>
+    </div>`).join('');
+}
+function addDT(){const k=ensureD();const t=document.getElementById('dti').value.trim();if(!t)return;ddata[k].todos.push({text:t,done:false});document.getElementById('dti').value='';set('ddata',ddata);renderDTodos(ddata[k].todos);}
+function toggleDT(i){const k=getDK();ddata[k].todos[i].done=!ddata[k].todos[i].done;set('ddata',ddata);renderDTodos(ddata[k].todos);}
+function removeDT(i){const k=getDK();ddata[k].todos.splice(i,1);set('ddata',ddata);renderDTodos(ddata[k].todos);}
+function saveDM(){const k=ensureD();ddata[k].memo=document.getElementById('dmemo').value;set('ddata',ddata);}
+function renderTLog(key){
+  const el=document.getElementById('tlog');el.innerHTML='';
+  const stored=get('tl-'+key)||{};
+  [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22].forEach((h,i)=>{
+    const b=document.createElement('div');b.className='time-row';
+    b.innerHTML=`<div class="time-lbl">${String(h).padStart(2,'0')}:00</div><div class="time-bar" style="background:${tColors[i]||'#e8e8e8'}"></div>`;
+    const c=document.createElement('div');c.className='time-content';c.contentEditable=true;c.textContent=stored[h]||'';
+    c.onblur=()=>{const s=get('tl-'+key)||{};s[h]=c.textContent;set('tl-'+key,s);};
+    b.appendChild(c);el.appendChild(b);
+  });
+}
+document.getElementById('ddate').value=new Date().toISOString().slice(0,10);
+renderDaily();
+['dgi','dti'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')id==='dgi'?addDG():addDT();}));
+
+// 앱 종료/새로고침 전 모든 데이터 저장
+window.addEventListener('beforeunload',()=>{
+  try{saveBeforeLeave();}catch(e){}
+  try{saveCurrentQTextareas();}catch(e){}
+});
+
+// 페이지 숨김 (모바일에서 앱 전환) 시 저장
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden'){
+    try{saveBeforeLeave();}catch(e){}
+    try{saveCurrentQTextareas();}catch(e){}
+  }
+});
+
+// ══ 10. QUARTER ══
+// qdata 구조: { Q1: { '0': '내용', '1': '내용', ... }, Q2: {...}, ... }
+// 인덱스를 키로 사용해서 영역 이름이 바뀌어도 데이터 유지
+const defaultQAreas=[
+  {name:'직업·커리어',color:'#e6f4ea',tc:'#188038'},
+  {name:'자기계발',color:'#fce8e6',tc:'#d93025'},
+  {name:'새로운 도전',color:'#fef7e0',tc:'#f29900'},
+  {name:'건강·육체',color:'#e8f0fe',tc:'#1a73e8'},
+  {name:'가정',color:'#fce8e6',tc:'#c5221f'},
+  {name:'사회·종교',color:'#f3e8fd',tc:'#9334e6'},
+];
+let qAreas=get('qareas')||defaultQAreas.map(a=>({...a}));
+let qdata=get('qplan')||{Q1:{},Q2:{},Q3:{},Q4:{}};
+// 초기화 보장
+['Q1','Q2','Q3','Q4'].forEach(q=>{if(!qdata[q])qdata[q]={};});
+let curQ='Q1';
+
+function saveQAreas(){set('qareas',qAreas);}
+function saveQData(){set('qplan',qdata);}
+
+function switchQ(q){
+  // 현재 분기 텍스트 저장 후 전환
+  saveCurrentQTextareas();
+  curQ=q;
+  document.querySelectorAll('#sec-quarter .sub-tab').forEach((b,i)=>b.classList.toggle('active',['Q1','Q2','Q3','Q4'][i]===q));
+  renderQ();
+}
+
+function saveCurrentQTextareas(){
+  // 화면에 있는 textarea 값을 모두 저장
+  document.querySelectorAll('#qcontent .q-ta').forEach((ta,i)=>{
+    if(!qdata[curQ])qdata[curQ]={};
+    qdata[curQ][String(i)]=ta.value;
+  });
+  saveQData();
+}
+
+function renderQ(){
+  if(!qdata[curQ])qdata[curQ]={};
+  const html=qAreas.map((area,i)=>{
+    const val=qdata[curQ][String(i)]||'';
+    return `<div class="q-box" style="border-color:${area.tc}33;background:${area.color}22;" draggable="true" ondragstart="dragQ(${i})" ondragover="event.preventDefault()" ondrop="dropQ(event,${i})">
+      <div class="q-box-header">
+        <span class="q-box-drag" style="cursor:grab;color:var(--text3);font-size:14px;padding:2px;">⠿</span>
+        <input class="q-box-label" style="color:${area.tc};background:transparent;border:none;outline:none;font-family:inherit;flex:1;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;" value="${area.name}" onblur="qAreas[${i}].name=this.value;saveQAreas();">
+        <button class="del-btn" onclick="removeQArea(${i})" style="font-size:13px;">×</button>
+      </div>
+      <textarea class="q-ta" placeholder="${curQ} 목표를 입력하세요..." data-idx="${i}" onblur="saveQItem(${i},this.value)">${val}</textarea>
+    </div>`;
+  }).join('');
+  document.getElementById('qcontent').innerHTML=`<div class="q-grid">${html}</div>`;
+}
+
+function saveQItem(idx,val){
+  if(!qdata[curQ])qdata[curQ]={};
+  qdata[curQ][String(idx)]=val;
+  saveQData();
+}
+
+function addQArea(){
+  qAreas.push({name:'새 영역',color:'#e8f0fe',tc:'#1a73e8'});
+  saveQAreas();renderQ();
+}
+function removeQArea(i){
+  if(qAreas.length<=1)return;
+  if(!confirm(qAreas[i].name+' 영역을 삭제할까요?'))return;
+  // shift data keys
+  ['Q1','Q2','Q3','Q4'].forEach(q=>{
+    if(!qdata[q])return;
+    const newD={};
+    Object.keys(qdata[q]).forEach(k=>{
+      const ki=parseInt(k);
+      if(ki<i)newD[k]=qdata[q][k];
+      else if(ki>i)newD[String(ki-1)]=qdata[q][k];
+    });
+    qdata[q]=newD;
+  });
+  qAreas.splice(i,1);
+  saveQAreas();saveQData();renderQ();
+}
+
+let dragIdx=-1;
+function dragQ(i){dragIdx=i;}
+function dropQ(e,i){
+  e.preventDefault();
+  if(dragIdx<0||dragIdx===i)return;
+  // move data keys too
+  ['Q1','Q2','Q3','Q4'].forEach(q=>{
+    if(!qdata[q])return;
+    const vals=qAreas.map((_,idx)=>qdata[q][String(idx)]||'');
+    const moved=vals.splice(dragIdx,1)[0];
+    vals.splice(i,0,moved);
+    vals.forEach((v,idx)=>qdata[q][String(idx)]=v);
+  });
+  const moved=qAreas.splice(dragIdx,1)[0];
+  qAreas.splice(i,0,moved);
+  dragIdx=-1;
+  saveQAreas();saveQData();renderQ();
+}
+renderQ();
+</script>
+</body>
+</html>
