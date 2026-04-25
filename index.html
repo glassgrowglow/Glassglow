@@ -482,24 +482,24 @@ select.input-field { cursor: pointer; }
 <!-- ══════════════════════════════ -->
 <div class="section" id="sec-bucket">
   <div class="card" style="padding:16px;">
-    <div class="section-label">꿈 LIST — 2020 ~ 2026</div>
+    <div class="section-label">꿈 LIST — 2026 ~ 2032</div>
     <div class="sub-tabs">
       <button class="sub-tab active" onclick="switchTab('bucket','todo','하고싶은 것')">하고싶은 것</button>
       <button class="sub-tab" onclick="switchTab('bucket','travel','여행지')">가고싶은 여행지</button>
     </div>
     <div id="bucket-todo" class="sub-pane active">
       <div class="input-row field-group">
-        <input type="text" class="input-field" id="bi-todo" placeholder="하고 싶은 것...">
+        <input type="text" class="input-field" id="bi-todo" placeholder="유리가 하고싶은것">
         <input type="text" class="input-field" id="by-todo" placeholder="연도" style="width:72px;">
-        <button class="btn btn-primary btn-sm" onclick="addBucket('todo')">추가</button>
+        <button class="btn btn-primary btn-sm" onclick="addBucket('todo')">+</button>
       </div>
       <div id="bl-todo"></div>
     </div>
     <div id="bucket-travel" class="sub-pane">
       <div class="input-row field-group">
-        <input type="text" class="input-field" id="bi-travel" placeholder="가고 싶은 여행지...">
+        <input type="text" class="input-field" id="bi-travel" placeholder="가고 싶은 여행지">
         <input type="text" class="input-field" id="by-travel" placeholder="연도" style="width:72px;">
-        <button class="btn btn-primary btn-sm" onclick="addBucket('travel')">추가</button>
+        <button class="btn btn-primary btn-sm" onclick="addBucket('travel')">+</button>
       </div>
       <div id="bl-travel"></div>
     </div>
@@ -531,7 +531,7 @@ select.input-field { cursor: pointer; }
       </div>
       <div class="input-row field-group">
         <input type="text" class="input-field" id="rs2" placeholder="한 줄 감상...">
-        <button class="btn btn-primary btn-sm" onclick="addBook()">추가</button>
+        <button class="btn btn-primary btn-sm" onclick="addBook()">+</button>
       </div>
       <div style="overflow-x:auto;">
         <table class="rtable">
@@ -545,7 +545,7 @@ select.input-field { cursor: pointer; }
         <input type="text" class="input-field" id="wt" placeholder="책 제목" style="flex:1;min-width:120px;">
         <input type="text" class="input-field" id="wa" placeholder="저자" style="width:100px;">
         <input type="text" class="input-field" id="wr" placeholder="이유" style="flex:1;min-width:100px;">
-        <button class="btn btn-primary btn-sm" onclick="addWish()">추가</button>
+        <button class="btn btn-primary btn-sm" onclick="addWish()">+</button>
       </div>
       <div style="overflow-x:auto;">
         <table class="rtable">
@@ -649,7 +649,7 @@ select.input-field { cursor: pointer; }
         <option value="#188038">초록</option><option value="#f29900">노랑</option>
         <option value="#9334e6">보라</option><option value="#0f9d58">민트</option>
       </select>
-      <button class="btn btn-primary btn-sm" onclick="addHabit()">추가</button>
+      <button class="btn btn-primary btn-sm" onclick="addHabit()">+</button>
     </div>
     <div class="habit-scroll">
       <div class="habit-header-row" id="hdh"></div>
