@@ -2381,7 +2381,7 @@ const sections=[
   {id:'monthly',label:'월간',group:'log'},
   {id:'habit',label:'해빗',group:'log'},
   {id:'weekly',label:'주간',group:'log'},
-  {id:'daily',label:'일간',group:'log'},
+  {id:'daily',label:'할일',group:'log'},
   {id:'quarter',label:'분기계획',group:'log'},
 ];
 // 섹션 사용/미사용 visibility (모두 default true)
@@ -2513,7 +2513,7 @@ function showSection(id){
   // 모든 바닥 nav 버튼 active 초기화
   document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
   if(id==='daily'){
-    // 일간 화면: shortcut 버튼만 active
+    // 할일 화면: shortcut 버튼만 active
     document.querySelectorAll('.bnav-btn[data-shortcut="daily"]').forEach(b=>b.classList.add('active'));
   } else {
     // 그 외: 해당 그룹 + shortcut이 아닌 버튼만 active
@@ -2582,13 +2582,13 @@ const bnavSVG={
 const bnav=document.getElementById('bottom-nav');
 [
   {key:'plan',label:'계획',icon:'plan'},
-  {key:'daily-shortcut',label:'일간',icon:'daily'},
+  {key:'daily-shortcut',label:'할일',icon:'daily'},
   {key:'log',label:'기록',icon:'log'},
 ].forEach(g=>{
   const b=document.createElement('button');
   b.className='bnav-btn'+(g.key==='plan'?' active':'');
   b.dataset.group=g.key==='daily-shortcut'?'log':g.key;
-  // 일간 shortcut 버튼 식별용 고유 속성
+  // 할일 shortcut 버튼 식별용 고유 속성
   if(g.key==='daily-shortcut') b.dataset.shortcut='daily';
   b.innerHTML=`<div class="bicon">${bnavSVG[g.icon]}</div><span>${g.label}</span>`;
   b.onclick=()=>{
@@ -4934,7 +4934,7 @@ document.addEventListener('visibilitychange',()=>{
     try{
       const now=new Date();
       const todayStr=now.toISOString().slice(0,10);
-      // 일간: 항상 오늘 날짜로 (다른 날짜 보고 있었다면 오늘로 복귀)
+      // 할일: 항상 오늘 날짜로 (다른 날짜 보고 있었다면 오늘로 복귀)
       const dateEl=document.getElementById('ddate');
       if(dateEl&&dateEl.value!==todayStr){
         dateEl.value=todayStr;
